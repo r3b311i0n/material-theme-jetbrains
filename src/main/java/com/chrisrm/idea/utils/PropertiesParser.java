@@ -71,7 +71,7 @@ public class PropertiesParser {
 
     if (key.endsWith("Insets")) {
       return parseInsets(value);
-    } else if (key.endsWith("Font")) {
+    } else if (key.endsWith("font")) {
       try {
         return parseFont(value);
       }
