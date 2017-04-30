@@ -16,77 +16,77 @@ import javax.swing.*;
 
 public class MTLafComponent implements ApplicationComponent {
 
-  private boolean isMaterialDesign;
+    private boolean isMaterialDesign;
 
-  public MTLafComponent(LafManager lafManager) {
-    lafManager.addLafManagerListener(source -> installTheme());
-  }
+    public MTLafComponent(LafManager lafManager) {
+        lafManager.addLafManagerListener(source -> installTheme());
+    }
 
-  @Override
-  public void initComponent() {
-    installTheme();
-    UIReplacer.patchUI();
+    @Override
+    public void initComponent() {
+        installTheme();
+        UIReplacer.patchUI();
 
-    ApplicationManager.getApplication().getMessageBus().connect()
-                      .subscribe(ConfigNotifier.CONFIG_TOPIC, mtConfig -> this.restartIdeIfNecessary());
-  }
+        ApplicationManager.getApplication().getMessageBus().connect()
+                          .subscribe(ConfigNotifier.CONFIG_TOPIC, mtConfig -> this.restartIdeIfNecessary());
+    }
 
-  @Override
-  public void disposeComponent() {
+    @Override
+    public void disposeComponent() {
 
-  }
+    }
 
-  @NotNull
-  @Override
-  public String getComponentName() {
-    return this.getClass().getName();
-  }
+    @NotNull
+    @Override
+    public String getComponentName() {
+        return this.getClass().getName();
+    }
 
-  private void restartIdeIfNecessary() {
-    MTConfig mtConfig = MTConfig.getInstance();
+    private void restartIdeIfNecessary() {
+        MTConfig mtConfig = MTConfig.getInstance();
 
-    // Restart the IDE if changed
-    if (mtConfig.isMaterialDesignChanged(this.isMaterialDesign)) {
-      String title = MaterialThemeBundle.message("mt.restartDialog.title");
-      String message = MaterialThemeBundle.message("mt.restartDialog.content");
+        // Restart the IDE if changed
+        if (mtConfig.isMaterialDesignChanged(this.isMaterialDesign)) {
+            String title = MaterialThemeBundle.message("mt.restartDialog.title");
+            String message = MaterialThemeBundle.message("mt.restartDialog.content");
 
-      int answer = Messages.showYesNoDialog(message, title, Messages.getQuestionIcon());
-      if (answer == Messages.YES) {
-        Application application = ApplicationManager.getApplication();
-        if (application instanceof ApplicationImpl) {
-          ((ApplicationImpl) application).restart(true);
-        } else {
-          application.restart();
+            int answer = Messages.showYesNoDialog(message, title, Messages.getQuestionIcon());
+            if (answer == Messages.YES) {
+                Application application = ApplicationManager.getApplication();
+                if (application instanceof ApplicationImpl) {
+                    ((ApplicationImpl) application).restart(true);
+                } else {
+                    application.restart();
+                }
+            }
         }
-      }
     }
-  }
 
-  private void installTheme() {
-    MTConfig mtConfig = MTConfig.getInstance();
-    this.isMaterialDesign = mtConfig.isMaterialDesign();
+    private void installTheme() {
+        MTConfig mtConfig = MTConfig.getInstance();
+        this.isMaterialDesign = mtConfig.isMaterialDesign();
 
-    if (mtConfig.isMaterialDesign()) {
-      replaceButtons();
-      replaceTextFields();
+        if (mtConfig.isMaterialDesign()) {
+            replaceButtons();
+            //      replaceTextFields();
+        }
     }
-  }
 
-  private void replaceTextFields() {
-    UIManager.put("TextFieldUI", MTTextFieldUI.class.getName());
-    UIManager.getDefaults().put(MTTextFieldUI.class.getName(), MTTextFieldUI.class);
+    private void replaceTextFields() {
+        UIManager.put("TextFieldUI", MTTextFieldUI.class.getName());
+        UIManager.getDefaults().put(MTTextFieldUI.class.getName(), MTTextFieldUI.class);
 
-      UIManager.put("PasswordFieldUI", MTPasswordFieldUI.class.getName());
-      UIManager.getDefaults().put(MTPasswordFieldUI.class.getName(), MTPasswordFieldUI.class);
+        UIManager.put("PasswordFieldUI", MTPasswordFieldUI.class.getName());
+        UIManager.getDefaults().put(MTPasswordFieldUI.class.getName(), MTPasswordFieldUI.class);
 
-    UIManager.put("TextField.border", new MTTextBorder());
-      UIManager.put("PasswordField.border", new MTTextBorder());
-  }
+        UIManager.put("TextField.border", new MTTextBorder());
+        UIManager.put("PasswordField.border", new MTTextBorder());
+    }
 
-  private void replaceButtons() {
-    UIManager.put("ButtonUI", MTButtonUI.class.getName());
-    UIManager.getDefaults().put(MTButtonUI.class.getName(), MTButtonUI.class);
+    private void replaceButtons() {
+        UIManager.put("ButtonUI", MTButtonUI.class.getName());
+        UIManager.getDefaults().put(MTButtonUI.class.getName(), MTButtonUI.class);
 
-    UIManager.put("Button.border", new MTButtonPainter());
-  }
+        UIManager.put("Button.border", new MTButtonPainter());
+    }
 }
