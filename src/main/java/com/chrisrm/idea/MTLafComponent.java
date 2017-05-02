@@ -69,7 +69,15 @@ public class MTLafComponent implements ApplicationComponent {
         if (mtConfig.isMaterialDesign()) {
             replaceButtons();
             //      replaceTextFields();
+            replaceProgressBar();
         }
+    }
+
+    private void replaceProgressBar() {
+        UIManager.put("ProgressBarUI", MTProgressBarUI.class.getName());
+        UIManager.getDefaults().put(MTProgressBarUI.class.getName(), MTProgressBarUI.class);
+
+        UIManager.put("ProgressBar.border", new MTProgressBarBorder());
     }
 
     private void replaceTextFields() {
