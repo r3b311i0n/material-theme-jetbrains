@@ -25,7 +25,6 @@ public class MTLafComponent implements ApplicationComponent {
     @Override
     public void initComponent() {
         installTheme();
-        UIReplacer.patchUI();
 
         ApplicationManager.getApplication().getMessageBus().connect()
                           .subscribe(ConfigNotifier.CONFIG_TOPIC, mtConfig -> this.restartIdeIfNecessary());
@@ -71,6 +70,8 @@ public class MTLafComponent implements ApplicationComponent {
             //      replaceTextFields();
             replaceProgressBar();
         }
+
+        UIReplacer.patchUI();
     }
 
     private void replaceProgressBar() {

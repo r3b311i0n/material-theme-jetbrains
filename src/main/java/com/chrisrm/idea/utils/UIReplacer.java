@@ -1,8 +1,11 @@
 package com.chrisrm.idea.utils;
 
+import com.intellij.ui.ColorUtil;
+import com.intellij.ui.JBColor;
 import com.intellij.util.ui.UIUtil;
 
 import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.Field;
 
 public class UIReplacer {
@@ -10,6 +13,12 @@ public class UIReplacer {
         try {
             Patcher.patchTables();
             Patcher.patchStatusBar();
+            Color color = ColorUtil.fromHex("263238");
+            StaticPatcher.setFinalStatic(UIUtil.class, "CONTRAST_BORDER_COLOR", new JBColor(color, color));
+            StaticPatcher.setFinalStatic(UIUtil.class, "BORDER_COLOR", new JBColor(color, color));
+
+
+            //            StaticPatcher.setFinalStatic(UIUtil.class, "SIDE_PANEL_BACKGROUND", new JBColor(color, color));
         }
         catch (Exception e) {
             e.printStackTrace();
