@@ -67,10 +67,7 @@ public class MTTextBorder extends DarculaTextBorder implements Border, UIResourc
 
       Object eop = ((JComponent) c).getClientProperty("JComponent.error.outline");
       if (Registry.is("ide.inplace.errors.outline") && Boolean.parseBoolean(String.valueOf(eop))) {
-        DarculaUIUtil.paintErrorBorder(g2, width, height, c.hasFocus());
-        if (Registry.is("ide.inplace.errors.balloon") && c.hasFocus()) {
-          DarculaUIUtil.showErrorTip((JComponent) c);
-        }
+          DarculaUIUtil.paintErrorBorder(g2, width, height, 0, true, c.hasFocus());
       } else if (c.hasFocus()) {
         g2.setColor(getSelectedBorderColor());
         g2.fillRect(JBUI.scale(1), height - JBUI.scale(2), width - JBUI.scale(2), JBUI.scale(2));
