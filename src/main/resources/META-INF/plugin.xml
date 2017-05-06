@@ -29,6 +29,9 @@
         <bundledColorScheme path="/colors/Material Theme - Default"/>
         <bundledColorScheme path="/colors/Material Theme - Palenight"/>
         <bundledColorScheme path="/colors/Material Theme - Darker"/>
+        <welcomeScreen implementation="com.chrisrm.idea.ui.MTFlatWelcomeScreenProvider" order="FIRST"></welcomeScreen>
+        <welcomeFrameProvider implementation="com.chrisrm.idea.ui.MTFlatWelcomeFrameProvider"
+                              order="FIRST"></welcomeFrameProvider>
     </extensions>
 
     <application-components>
